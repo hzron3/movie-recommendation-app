@@ -23,12 +23,10 @@ export default function MoviesPage({ searchParams }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Fetch genres once
   useEffect(() => {
     getGenres().then(setGenres).catch(console.error);
   }, []);
 
-  // Fetch movies whenever filters/search change
   useEffect(() => {
     async function loadMovies() {
       setLoading(true);
@@ -63,20 +61,19 @@ export default function MoviesPage({ searchParams }) {
     setLoadedCount(MOVIES_PER_PAGE);
   };
 
-  // Compute visible movies for current page
   const startIndex = (currentPage - 1) * MOVIES_PER_PAGE;
   const visibleMovies = movies.slice(startIndex, startIndex + loadedCount);
 
   return (
-    <div className="max-w-7xl mx-auto sm:p-4 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       {/* Filters */}
-      <div className="flex flex-wrap gap-4 my-12 items-center justify-between">
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 my-8">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           {/* Category */}
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="p-2 border rounded"
+            className="p-2 border rounded w-full sm:w-auto"
           >
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>
@@ -91,7 +88,7 @@ export default function MoviesPage({ searchParams }) {
           <select
             value={genreId}
             onChange={(e) => setGenreId(e.target.value)}
-            className="p-2 border rounded"
+            className="p-2 border rounded w-full sm:w-auto"
           >
             <option value="">All Genres</option>
             {genres.map((g) => (
@@ -103,7 +100,7 @@ export default function MoviesPage({ searchParams }) {
         </div>
 
         {/* Search */}
-        <div className="flex rounded-md border-2 border-sky-400 overflow-hidden max-w-xs">
+        <div className="flex rounded-md border-2 border-sky-400 overflow-hidden w-full sm:max-w-xs">
           <input
             type="text"
             placeholder="Search..."
@@ -121,7 +118,7 @@ export default function MoviesPage({ searchParams }) {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6 text-white"
+              className="w-5 h-5 text-white"
             >
               <path
                 strokeLinecap="round"
@@ -133,21 +130,21 @@ export default function MoviesPage({ searchParams }) {
         </div>
       </div>
 
-      {/* Loading spinner */}
+      {/* Loading */}
       {loading && (
         <div className="flex justify-center my-8">
           <div className="w-12 h-12 border-4 border-sky-300 border-t-sky-500 rounded-full animate-spin"></div>
         </div>
       )}
 
-      {/* Movie grid */}
+      {/* Movies */}
       {!loading && visibleMovies.length === 0 && (
         <p className="text-center text-gray-500">No movies found.</p>
       )}
 
       {!loading && visibleMovies.length > 0 && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {visibleMovies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} category={category} />
             ))}
@@ -158,7 +155,7 @@ export default function MoviesPage({ searchParams }) {
             <div className="flex justify-center mt-6">
               <button
                 onClick={handleLoadMore}
-                className="px-6 py-2 bg-[#25a1d6] text-white font-semibold rounded hover:bg-[#25a1d6]/80 transition"
+                className="px-6 py-2 bg-sky-500 text-white font-semibold rounded hover:bg-sky-500/80 transition"
               >
                 Load More
               </button>
@@ -166,7 +163,7 @@ export default function MoviesPage({ searchParams }) {
           )}
 
           {/* Pagination */}
-          <ul className="flex space-x-3 justify-center mt-6">
+          <ul className="flex flex-wrap justify-center mt-6 gap-2">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <li
                 key={page}

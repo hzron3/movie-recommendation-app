@@ -6,7 +6,15 @@ export default function MovieCard({ movie, category }) {
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : "https://placehold.co/600x900";
-  const releaseYear = movie.release_date?.split("-")[0];
+
+  // Format full release date
+  const releaseDate = movie.release_date
+    ? new Date(movie.release_date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Unknown";
 
   const displayCategory = category
     ? category.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
@@ -48,7 +56,7 @@ export default function MovieCard({ movie, category }) {
             {movie.title}
           </h3>
           <p className="text-sm sm:text-base text-gray-500 mt-1">
-            {releaseYear}
+            {releaseDate}
           </p>
           <p className="text-sm sm:text-base text-gray-700 mt-2 line-clamp-4">
             {movie.overview?.length > 120
