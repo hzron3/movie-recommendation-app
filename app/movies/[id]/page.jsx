@@ -41,7 +41,7 @@ export default async function MoviePage({ params }) {
       {/* Movie Details */}
       <div className="grid md:grid-cols-3 gap-8">
         {/* Poster */}
-        <div className="rounded-xl overflow-hidden shadow-lg">
+        <div className="hidden md:block rounded-xl overflow-hidden shadow-lg">
           <img
             src={movie.poster_path}
             alt={movie.title}

@@ -7,20 +7,14 @@ export default function FeaturedMovies({ movies, category }) {
 
   return (
     <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-start text-[#25a1d6] mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-start text-[#25a1d6] mb-8 sm:mb-12">
           Featured Movies
         </h2>
 
-        <div className="flex overflow-x-auto space-x-6 pb-6 scrollbar-hide md:grid md:grid-cols-3 md:gap-8 md:overflow-x-visible">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {movies.map((movie) => (
-            <Link
-              key={movie.id}
-              href={`/movies/${movie.id}`}
-              className="flex-shrink-0 md:flex-1"
-            >
-              <MovieCard movie={movie} category={category} />
-            </Link>
+            <MovieCard key={movie.id} movie={movie} category={category} />
           ))}
         </div>
       </div>

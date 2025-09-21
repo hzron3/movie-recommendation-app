@@ -10,14 +10,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // Dummy auth (replace with real backend)
+        // Dummy auth
         if (
           credentials.email === "savannahinformatics@example.com" &&
           credentials.password === "password"
         ) {
           return {
             id: "1",
-            name: "Savannah Informatics",
+            name: "John",
             email: credentials.email,
           };
         }

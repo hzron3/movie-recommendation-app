@@ -68,7 +68,7 @@ export default function MoviesPage({ searchParams }) {
   const visibleMovies = movies.slice(startIndex, startIndex + loadedCount);
 
   return (
-    <div className="max-w-7xl mx-auto p-4 space-y-6">
+    <div className="max-w-7xl mx-auto sm:p-4 space-y-6">
       {/* Filters */}
       <div className="flex flex-wrap gap-4 my-12 items-center justify-between">
         <div className="flex flex-wrap gap-2">

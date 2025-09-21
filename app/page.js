@@ -3,13 +3,19 @@ import FeaturedMovies from "./components/FeaturedMovies";
 import { fetchMovies } from "@/utils/tmdbapi";
 
 export default async function Home() {
-  const [featuredMovies] = await Promise.all([fetchMovies("popular", 1)]);
+  let popularMovies = [];
+  try {
+    popularMovies = await fetchMovies("popular", 1);
+  } catch (err) {
+    console.error("Failed to fetch popular movies:", err);
+  }
 
-  const limitedFeatured = (featuredMovies || []).slice(0, 6);
+  const limitedFeatured = (popularMovies || []).slice(0, 6);
+
   return (
     <>
       <Hero />
-      <FeaturedMovies movies={limitedFeatured} />
+      <FeaturedMovies movies={limitedFeatured} category="popular" />
     </>
   );
 }
