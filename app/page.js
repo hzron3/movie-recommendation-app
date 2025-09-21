@@ -1,11 +1,15 @@
-import Image from "next/image";
+import Hero from "./components/Hero";
+import FeaturedMovies from "./components/FeaturedMovies";
+import { fetchMovies } from "@/utils/tmdbapi";
 
-export default function Home() {
+export default async function Home() {
+  const [featuredMovies] = await Promise.all([fetchMovies("popular", 1)]);
+
+  const limitedFeatured = (featuredMovies || []).slice(0, 6);
   return (
     <>
-      <div>
-        <h1>This Move Recommendation App</h1>
-      </div>
+      <Hero />
+      <FeaturedMovies movies={limitedFeatured} />
     </>
   );
 }
