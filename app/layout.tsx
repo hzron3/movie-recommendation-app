@@ -1,4 +1,3 @@
-// app/layout.tsx
 "use client";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -22,10 +21,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body className={`${poppins.className} min-h-screen flex flex-col`}>
         <Providers>
           {!hideHeaderFooter && <Header />}
-          {children}
+
+          <main className="flex-grow">{children}</main>
           {!hideHeaderFooter && <Footer />}
         </Providers>
       </body>

@@ -12,7 +12,7 @@ export default function Header() {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header className="flex shadow-[0px_0px_16px_rgba(17,17,26,0.1)] py-4 px-4 sm:px-6 bg-white min-h-[70px] tracking-wide relative z-50">
+    <header className="top-0 sticky flex shadow-[0px_0px_16px_rgba(17,17,26,0.1)] py-4 px-4 sm:px-6 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex items-center justify-between w-full max-w-screen-xl mx-auto relative">
         <Link href="/" className="flex items-center z-10">
           <Image
@@ -72,7 +72,7 @@ export default function Header() {
               </span>
               <button
                 onClick={() => signOut()}
-                className="bg-[#25a1d6] hover:bg-[#1d88b3] px-4 py-2 rounded-md text-white font-medium"
+                className="bg-[#25a1d6] hover:bg-[#1d88b3] px-4 py-2 rounded-md text-white font-medium hover:cursor-pointer"
               >
                 Logout
               </button>
@@ -147,7 +147,7 @@ export default function Header() {
                   signOut();
                   toggleMenu();
                 }}
-                className="bg-[#25a1d6] hover:bg-[#1d88b3] px-4 py-2 rounded-md text-white font-medium"
+                className="bg-[#25a1d6] hover:bg-[#1d88b3] px-4 py-2 rounded-md text-white font-medium hover:cursor-pointer"
               >
                 Logout
               </button>
