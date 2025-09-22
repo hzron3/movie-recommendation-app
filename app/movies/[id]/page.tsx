@@ -12,13 +12,11 @@ interface MoviePageProps {
 
 export default async function MoviePage({ params }: MoviePageProps) {
   const session = await auth();
-  const resolvedParams = await params;
-  const id = Array.isArray(resolvedParams.id)
-    ? resolvedParams.id[0]
-    : resolvedParams.id;
-
-  const movieId = parseInt(id);
   if (!session) redirect("/login");
+
+  // Resolve ID
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  const movieId = parseInt(id);
 
   let movie: Movie | null = null;
   try {
@@ -30,7 +28,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   if (!movie) notFound();
 
-  //Placeholder fallbacks
+  // Placeholder fallbacks
   const PLACEHOLDER_BACKDROP =
     "https://placehold.co/1200x600/png?text=No+Backdrop";
   const PLACEHOLDER_POSTER = "https://placehold.co/600x900/png?text=No+Poster";
