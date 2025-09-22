@@ -32,26 +32,19 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
 
-    if (!result?.error) {
-      const baseUrl = process.env.NEXTAUTH_URL || window.location.origin;
-      const resolvedCallbackUrl = callbackUrl.startsWith("http")
-        ? callbackUrl
-        : `${baseUrl}${callbackUrl}`;
-
-      router.push(resolvedCallbackUrl);
-    }
-
     setLoading(false);
+
     if (result?.error) {
       setError("Invalid credentials");
     } else {
-      router.push(callbackUrl);
+      router.push("/movies");
     }
   };
 
