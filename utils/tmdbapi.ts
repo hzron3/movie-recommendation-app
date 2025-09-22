@@ -28,7 +28,7 @@ export async function getGenres(): Promise<import("@/types").Genre[]> {
 
 // Fetch movies with optional category, genre, search, and pagination
 export async function fetchMovies(
-  category: keyof typeof CATEGORIES = "popular",
+  category: import("@/types").Category = "popular",
   page: number = 1,
   genreId?: number,
   query?: string

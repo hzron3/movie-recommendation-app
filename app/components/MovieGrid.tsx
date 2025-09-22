@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Movie, Genre, SearchParams } from "@/types";
+import { Movie, Genre, Category, SearchParams } from "@/types";
 import MovieCard from "./MovieCard";
 
 interface MovieGridProps {
   movies: Movie[];
   genres: Genre[];
-  category: string;
+  category: Category;
   query?: string;
   page: number;
   genreId?: string;

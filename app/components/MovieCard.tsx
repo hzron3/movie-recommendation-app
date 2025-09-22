@@ -4,28 +4,37 @@
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
-import { Movie } from "@/types";
+import type { Movie, Category } from "@/types";
 
 interface MovieCardProps {
   movie: Movie;
-  category: string;
+  category: Category;
 }
 
 export default function MovieCard({ movie, category }: MovieCardProps) {
-  const imageUrl = movie.poster_path || "https://placehold.co/600x900";
-  const releaseYear = movie.release_date?.split("-")[0] || "Unknown";
+  const imageUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : "https://placehold.co/600x900.png?text=No+Image";
+
+  const releaseDate = movie.release_date
+    ? new Date(movie.release_date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Unknown";
 
   const displayCategory = category
     ? category.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
     : "Featured";
 
-  const voteAverageDisplay =
-    movie.vote_average !== undefined ? movie.vote_average.toFixed(1) : "N/A";
-
   const overviewSnippet =
-    movie.overview?.length && movie.overview.length > 120
+    movie.overview && movie.overview.length > 120
       ? movie.overview.substring(0, 117) + "..."
       : movie.overview || "No description available.";
+
+  const voteAverageDisplay =
+    movie.vote_average !== undefined ? movie.vote_average.toFixed(1) : "N/A";
 
   return (
     <Link
@@ -38,6 +47,7 @@ export default function MovieCard({ movie, category }: MovieCardProps) {
           alt={movie.title || "Movie Poster"}
           width={500}
           height={750}
+          unoptimized
           className="w-full h-72 sm:h-80 md:h-96 object-cover rounded-t-xl transition-transform duration-500 group-hover:scale-105"
         />
 
@@ -65,11 +75,11 @@ export default function MovieCard({ movie, category }: MovieCardProps) {
             {movie.title || "Untitled"}
           </h3>
           <p className="text-sm sm:text-base text-gray-500 mt-1">
-            {releaseYear}
+            {releaseDate}
           </p>
-          <p className="text-sm sm:text-base text-gray-700 mt-2 line-clamp-4">
+          {/* <p className="text-sm sm:text-base text-gray-700 mt-2 line-clamp-4">
             {overviewSnippet}
-          </p>
+          </p> */}
         </div>
       </div>
     </Link>

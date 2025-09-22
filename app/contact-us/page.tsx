@@ -19,7 +19,7 @@ export default function ContactSection() {
               height={450}
               className="w-full h-full object-cover rounded-lg lg:rounded-l-lg"
             />
-            <h1 className="absolute top-6 sm:top-10 left-4 sm:left-10 text-white text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug font-manrope drop-shadow-lg">
+            <h1 className="absolute top-6 sm:top-10 left-4 sm:left-10 text-white text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug  drop-shadow-lg">
               Contact us
             </h1>
             <div className="absolute bottom-4 sm:bottom-6 lg:bottom-10 w-full px-4 sm:px-10">
@@ -52,7 +52,7 @@ export default function ContactSection() {
 
           {/* Right Form */}
           <div className="bg-gray-50 p-6 sm:p-8 lg:p-10 rounded-lg shadow-lg">
-            <h2 className="text-sky-400 font-manrope text-2xl sm:text-3xl lg:text-4xl font-semibold leading-snug mb-6 sm:mb-10">
+            <h2 className="text-sky-400  text-2xl sm:text-3xl lg:text-4xl font-semibold leading-snug mb-6 sm:mb-10">
               Send Us A Message
             </h2>
 

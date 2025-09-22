@@ -1,4 +1,6 @@
 // app/types/index.ts
+export type Category = "popular" | "top_rated" | "now_playing" | "upcoming";
+
 export interface Movie {
   id: number;
   title: string;
@@ -30,7 +32,7 @@ export interface User {
 }
 
 export interface SearchParams {
-  category?: string;
+  category?: Category;
   genre?: string;
   query?: string;
   page?: string;

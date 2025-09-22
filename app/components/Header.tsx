@@ -21,7 +21,7 @@ export default function Header() {
             alt="MovieApp"
             width={96}
             height={96}
-            className="hidden sm:block w-24 h-16 object-contain"
+            className="hidden sm:block w-36 h-20 object-contain"
           />
           <Image
             src="/Movie Film Logo.png"

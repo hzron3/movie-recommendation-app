@@ -29,20 +29,28 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   if (!movie) notFound();
 
-  // Ensure backdrop_path is full URL
+  // ✅ Placeholder fallbacks
+  const PLACEHOLDER_BACKDROP =
+    "https://placehold.co/1200x600/png?text=No+Backdrop";
+  const PLACEHOLDER_POSTER = "https://placehold.co/600x900/png?text=No+Poster";
+
   const backdropUrl = movie.backdrop_path
     ? `https://image.tmdb.org/t/p/original${movie.backdrop_path.replace(
         "https://image.tmdb.org/t/p/w500",
         ""
       )}`
-    : "";
+    : PLACEHOLDER_BACKDROP;
+
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : PLACEHOLDER_POSTER;
 
   return (
     <div className="max-w-7xl mx-auto p-4 space-y-8">
       {/* Hero / Banner */}
       <div className="relative h-[50vh] md:h-[50vh] rounded-xl overflow-hidden shadow-lg">
         <img
-          src={backdropUrl || movie.poster_path || ""}
+          src={backdropUrl}
           alt={movie.title || "Movie"}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
@@ -63,7 +71,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
         {/* Poster */}
         <div className="hidden md:block rounded-xl overflow-hidden shadow-lg">
           <img
-            src={movie.poster_path || ""}
+            src={posterUrl}
             alt={movie.title || "Movie Poster"}
             className="w-full h-auto object-cover"
           />
