@@ -1,8 +1,17 @@
 "use client";
 import Link from "next/link";
+import { Movie } from "@/types";
 import MovieCard from "./MovieCard";
 
-export default function FeaturedMovies({ movies, category }) {
+interface FeaturedMoviesProps {
+  movies: Movie[];
+  category: string;
+}
+
+export default function FeaturedMovies({
+  movies,
+  category,
+}: FeaturedMoviesProps) {
   if (!movies || movies.length === 0) return null;
 
   return (

@@ -1,20 +1,26 @@
+// app/components/Hero.tsx
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import { getGenres, CATEGORIES } from "@/utils/tmdbapi";
+import { getGenres, CATEGORIES } from "utils/tmdbapi";
+import { Movie, Genre, SearchParams } from "@/types";
 
-export default function Hero({ heroMovie }) {
-  const [category, setCategory] = useState("popular");
-  const [genre, setGenre] = useState("");
-  const [query, setQuery] = useState("");
-  const [genres, setGenres] = useState([]);
+interface HeroProps {
+  heroMovie: Movie | null;
+}
+
+export default function Hero({ heroMovie }: HeroProps) {
+  const [category, setCategory] = useState<keyof typeof CATEGORIES>("popular");
+  const [genre, setGenre] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
+  const [genres, setGenres] = useState<Genre[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    async function fetchGenres() {
+    async function fetchGenres(): Promise<void> {
       try {
-        const data = await getGenres();
+        const data: Genre[] = await getGenres();
         setGenres(data);
       } catch (error) {
         console.error("Failed to load genres:", error);
@@ -23,7 +29,7 @@ export default function Hero({ heroMovie }) {
     fetchGenres();
   }, []);
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const params = new URLSearchParams();
     params.set("category", category);
@@ -61,7 +67,9 @@ export default function Hero({ heroMovie }) {
           <div className="w-full sm:w-1/3 relative border-b sm:border-b-0 sm:border-r border-gray-200 flex items-center">
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setCategory(e.target.value as keyof typeof CATEGORIES)
+              }
               className="appearance-none w-full p-3 sm:p-2 text-gray-800 bg-white pr-10"
             >
               {Object.keys(CATEGORIES).map((cat) => (
@@ -79,12 +87,14 @@ export default function Hero({ heroMovie }) {
           <div className="w-full sm:w-1/3 relative border-b sm:border-b-0 sm:border-r border-gray-200 flex items-center">
             <select
               value={genre}
-              onChange={(e) => setGenre(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setGenre(e.target.value)
+              }
               className="appearance-none w-full p-3 sm:p-2 text-gray-800 bg-white pr-10"
             >
               <option value="">All Genres</option>
               {genres.map((g) => (
-                <option key={g.id} value={g.id}>
+                <option key={g.id} value={g.id.toString()}>
                   {g.name}
                 </option>
               ))}
@@ -98,7 +108,9 @@ export default function Hero({ heroMovie }) {
               type="text"
               placeholder="Search movies..."
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
               className="w-full outline-none text-gray-800 p-3 sm:p-2"
             />
             <button

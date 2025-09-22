@@ -1,24 +1,31 @@
+// app/components/MovieCard.tsx
 "use client";
+
 import Link from "next/link";
+import Image from "next/image";
 import { StarIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
+import { Movie } from "@/types";
 
-export default function MovieCard({ movie, category }) {
-  const imageUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : "https://placehold.co/600x900";
+interface MovieCardProps {
+  movie: Movie;
+  category: string;
+}
 
-  // Format full release date
-  const releaseDate = movie.release_date
-    ? new Date(movie.release_date).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "Unknown";
+export default function MovieCard({ movie, category }: MovieCardProps) {
+  const imageUrl = movie.poster_path || "https://placehold.co/600x900";
+  const releaseYear = movie.release_date?.split("-")[0] || "Unknown";
 
   const displayCategory = category
     ? category.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
     : "Featured";
+
+  const voteAverageDisplay =
+    movie.vote_average !== undefined ? movie.vote_average.toFixed(1) : "N/A";
+
+  const overviewSnippet =
+    movie.overview?.length && movie.overview.length > 120
+      ? movie.overview.substring(0, 117) + "..."
+      : movie.overview || "No description available.";
 
   return (
     <Link
@@ -26,9 +33,11 @@ export default function MovieCard({ movie, category }) {
       className="group block bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden relative"
     >
       <div className="relative">
-        <img
+        <Image
           src={imageUrl}
-          alt={movie.title}
+          alt={movie.title || "Movie Poster"}
+          width={500}
+          height={750}
           className="w-full h-72 sm:h-80 md:h-96 object-cover rounded-t-xl transition-transform duration-500 group-hover:scale-105"
         />
 
@@ -45,7 +54,7 @@ export default function MovieCard({ movie, category }) {
           </span>
           <span className="flex items-center gap-1 bg-black/60 px-2 py-0.5 rounded text-white text-xs">
             <StarIcon className="w-4 h-4 text-yellow-400" />
-            {movie.vote_average.toFixed(1)}
+            {voteAverageDisplay}
           </span>
         </div>
       </div>
@@ -53,15 +62,13 @@ export default function MovieCard({ movie, category }) {
       <div className="p-4 flex flex-col justify-between h-auto">
         <div>
           <h3 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-[#25a1d6] transition-colors duration-300">
-            {movie.title}
+            {movie.title || "Untitled"}
           </h3>
           <p className="text-sm sm:text-base text-gray-500 mt-1">
-            {releaseDate}
+            {releaseYear}
           </p>
           <p className="text-sm sm:text-base text-gray-700 mt-2 line-clamp-4">
-            {movie.overview?.length > 120
-              ? movie.overview.substring(0, 117) + "..."
-              : movie.overview || "No description available."}
+            {overviewSnippet}
           </p>
         </div>
       </div>

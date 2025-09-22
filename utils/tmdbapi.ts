@@ -1,3 +1,4 @@
+// app/utils/tmdbapi.ts
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
@@ -8,10 +9,10 @@ export const CATEGORIES = {
   top_rated: "top_rated",
   now_playing: "now_playing",
   upcoming: "upcoming",
-};
+} as const;
 
 // Fetch all genres
-export async function getGenres() {
+export async function getGenres(): Promise<import("@/types").Genre[]> {
   if (!API_KEY)
     throw new Error("TMDb API key not configured. Check .env.local");
 
@@ -22,16 +23,16 @@ export async function getGenres() {
 
   if (!data.genres) throw new Error("Failed to fetch genres");
 
-  return data.genres; // [{id: 28, name: 'Action'}, ...]
+  return data.genres;
 }
 
 // Fetch movies with optional category, genre, search, and pagination
 export async function fetchMovies(
-  category = "popular",
-  page = 1,
-  genreId = null,
-  query = null
-) {
+  category: keyof typeof CATEGORIES = "popular",
+  page: number = 1,
+  genreId?: number,
+  query?: string
+): Promise<import("@/types").Movie[]> {
   if (!API_KEY)
     throw new Error("TMDb API key not configured. Check .env.local");
 
@@ -59,7 +60,7 @@ export async function fetchMovies(
 
   if (!data.results) throw new Error(`Failed to fetch movies for ${category}`);
 
-  return data.results.map((movie) => ({
+  return data.results.map((movie: any) => ({
     ...movie,
     poster_path: movie.poster_path ? `${IMAGE_BASE}${movie.poster_path}` : null,
     backdrop_path: movie.backdrop_path
@@ -69,7 +70,9 @@ export async function fetchMovies(
 }
 
 // Fetch details of a single movie
-export async function fetchMovieDetails(id) {
+export async function fetchMovieDetails(
+  id: number
+): Promise<import("@/types").Movie> {
   if (!API_KEY)
     throw new Error("TMDb API key not configured. Check .env.local");
 
@@ -95,7 +98,9 @@ export async function fetchMovieDetails(id) {
 }
 
 // Fetch hero movie (first popular movie)
-export async function fetchHeroMovie() {
+export async function fetchHeroMovie(): Promise<
+  import("@/types").Movie | null
+> {
   const movies = await fetchMovies("popular", 1);
   return movies[0] || null;
 }
