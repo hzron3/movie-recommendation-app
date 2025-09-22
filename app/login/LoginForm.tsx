@@ -1,7 +1,8 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   UserIcon,
@@ -26,9 +27,7 @@ export default function Login() {
     setPassword("password");
   }, []);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -36,18 +35,24 @@ export default function Login() {
     const result = await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      redirect: false, // manual redirec
     });
-
-    setLoading(false);
 
     if (result?.error) {
       setError("Invalid credentials");
+      setLoading(false);
+      return;
+    }
+
+    const session = await getSession();
+    if (session) {
+      router.push("/movies");
     } else {
       router.push("/movies");
     }
-  };
 
+    setLoading(false);
+  };
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center py-6 px-4">
       <div className="max-w-[480px] w-full">
