@@ -1,4 +1,5 @@
 // app/movies/[id]/page.tsx
+import Image from "next/image";
 import { auth } from "Auth";
 import { fetchMovieDetails } from "utils/tmdbapi";
 import { redirect, notFound } from "next/navigation";
@@ -49,8 +50,10 @@ export default async function MoviePage({ params }: MoviePageProps) {
     <div className="max-w-7xl mx-auto p-4 space-y-8">
       {/* Hero / Banner */}
       <div className="relative h-[50vh] md:h-[50vh] rounded-xl overflow-hidden shadow-lg">
-        <img
+        <Image
           src={backdropUrl}
+          width={500}
+          height={750}
           alt={movie.title || "Movie"}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
@@ -70,9 +73,11 @@ export default async function MoviePage({ params }: MoviePageProps) {
       <div className="grid md:grid-cols-3 gap-8">
         {/* Poster */}
         <div className="hidden md:block rounded-xl overflow-hidden shadow-lg">
-          <img
+          <Image
             src={posterUrl}
             alt={movie.title || "Movie Poster"}
+            width={500}
+            height={750}
             className="w-full h-auto object-cover"
           />
         </div>

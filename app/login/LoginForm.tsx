@@ -157,7 +157,7 @@ export default function Login() {
 
             {/* Register */}
             <p className="text-slate-900 text-sm !mt-6 text-center">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <a
                 href="#"
                 className="text-sky-400 hover:underline ml-1 whitespace-nowrap font-semibold"
