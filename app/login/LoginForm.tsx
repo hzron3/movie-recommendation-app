@@ -37,6 +37,16 @@ export default function Login() {
       password,
       redirect: false,
     });
+
+    if (!result?.error) {
+      const baseUrl = process.env.NEXTAUTH_URL || window.location.origin;
+      const resolvedCallbackUrl = callbackUrl.startsWith("http")
+        ? callbackUrl
+        : `${baseUrl}${callbackUrl}`;
+
+      router.push(resolvedCallbackUrl);
+    }
+
     setLoading(false);
     if (result?.error) {
       setError("Invalid credentials");
