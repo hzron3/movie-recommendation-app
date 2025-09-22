@@ -1,41 +1,47 @@
+// app/movies/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-import MovieCard from "../components/MovieCard";
-import { fetchMovies, getGenres } from "@/utils/tmdbapi";
+import type { Movie, Genre, SearchParams, Category } from "@/types";
+import MovieCard from "@/components/MovieCard";
+import { fetchMovies, getGenres } from "utils/tmdbapi";
 
-const CATEGORIES = ["popular", "now_playing", "upcoming", "top_rated"];
+const CATEGORIES = ["popular", "now_playing", "upcoming", "top_rated"] as const;
 const MOVIES_PER_PAGE = 16;
 const LOAD_MORE_COUNT = 8;
 
-export default function MoviesPage({ searchParams }) {
-  const initialCategory = searchParams?.category || "popular";
-  const initialGenre = searchParams?.genre || "";
-  const initialQuery = searchParams?.query || "";
+interface MoviesPageProps {
+  searchParams: SearchParams;
+}
 
-  const [movies, setMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [category, setCategory] = useState(initialCategory);
-  const [genreId, setGenreId] = useState(initialGenre);
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [loading, setLoading] = useState(false);
-  const [loadedCount, setLoadedCount] = useState(MOVIES_PER_PAGE);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+export default function MoviesPage({ searchParams }: MoviesPageProps) {
+  const initialCategory = (searchParams?.category ?? "popular") as Category;
+  const initialGenre = searchParams?.genre ?? "";
+  const initialQuery = searchParams?.query ?? "";
+
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [category, setCategory] = useState<Category>(initialCategory);
+  const [genreId, setGenreId] = useState<string>(initialGenre);
+  const [searchQuery, setSearchQuery] = useState<string>(initialQuery);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loadedCount, setLoadedCount] = useState<number>(MOVIES_PER_PAGE);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   useEffect(() => {
     getGenres().then(setGenres).catch(console.error);
   }, []);
 
   useEffect(() => {
-    async function loadMovies() {
+    async function loadMovies(): Promise<void> {
       setLoading(true);
       try {
         const data = await fetchMovies(
           category,
           1,
-          genreId || null,
-          searchQuery || null
+          genreId ? parseInt(genreId) : undefined,
+          searchQuery || undefined
         );
 
         setMovies(data || []);
@@ -52,11 +58,11 @@ export default function MoviesPage({ searchParams }) {
     loadMovies();
   }, [category, genreId, searchQuery]);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (): void => {
     setLoadedCount((prev) => Math.min(prev + LOAD_MORE_COUNT, movies.length));
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number): void => {
     setCurrentPage(page);
     setLoadedCount(MOVIES_PER_PAGE);
   };
@@ -72,7 +78,9 @@ export default function MoviesPage({ searchParams }) {
           {/* Category */}
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setCategory(e.target.value as Category)
+            }
             className="p-2 border rounded w-full sm:w-auto"
           >
             {CATEGORIES.map((cat) => (
@@ -87,12 +95,14 @@ export default function MoviesPage({ searchParams }) {
           {/* Genre */}
           <select
             value={genreId}
-            onChange={(e) => setGenreId(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setGenreId(e.target.value)
+            }
             className="p-2 border rounded w-full sm:w-auto"
           >
             <option value="">All Genres</option>
             {genres.map((g) => (
-              <option key={g.id} value={g.id}>
+              <option key={g.id} value={g.id.toString()}>
                 {g.name}
               </option>
             ))}
@@ -105,7 +115,9 @@ export default function MoviesPage({ searchParams }) {
             type="text"
             placeholder="Search..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchQuery(e.target.value)
+            }
             className="w-full outline-none bg-white text-gray-600 text-sm px-4 py-2"
           />
           <button

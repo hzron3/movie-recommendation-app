@@ -3,24 +3,24 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { User } from "@/types";
 
 export default function Header() {
-  const { data: session } = useSession();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession() as { data: { user: User } | null };
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <header className="flex shadow-[0px_0px_16px_rgba(17,17,26,0.1)] py-4 px-4 sm:px-6 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex items-center justify-between w-full max-w-screen-xl mx-auto relative">
-        {/* Logo */}
         <Link href="/" className="flex items-center z-10">
           <Image
             src="/Movie Film Logo.png"
             alt="MovieApp"
             width={96}
             height={96}
-            className="hidden sm:block w-24 h-16 object-contain"
+            className="hidden sm:block w-36 h-20 object-contain"
           />
           <Image
             src="/Movie Film Logo.png"
@@ -31,7 +31,6 @@ export default function Header() {
           />
         </Link>
 
-        {/* Desktop Menu (Centered) */}
         <ul className="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-x-6 text-[#25a1d6] font-medium">
           <li>
             <Link href="/" className="hover:text-[#25a1d6]/80">
@@ -50,7 +49,6 @@ export default function Header() {
           </li>
         </ul>
 
-        {/* Login / Logout */}
         <div className="hidden lg:flex items-center gap-4 z-10">
           {!session ? (
             <Link

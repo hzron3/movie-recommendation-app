@@ -1,3 +1,4 @@
+// app/layout.tsx
 "use client";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -11,13 +12,11 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
 });
 
-// export const metadata = {
-//   title: "Movie Recommendation App",
-//   icons: "/Movie Film Icon.png",
-//   description: "Discover movies with TMDb",
-// };
-
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const hideHeaderFooter = pathname.startsWith("/login");
 
