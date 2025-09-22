@@ -1,11 +1,12 @@
+// app/components/FeaturedMovies.tsx
 "use client";
 import Link from "next/link";
-import { Movie } from "@/types";
+import { Movie, Category } from "@/types";
 import MovieCard from "./MovieCard";
 
 interface FeaturedMoviesProps {
   movies: Movie[];
-  category: string;
+  category: Category;
 }
 
 export default function FeaturedMovies({
