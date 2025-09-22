@@ -29,7 +29,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   if (!movie) notFound();
 
-  // ✅ Placeholder fallbacks
+  //Placeholder fallbacks
   const PLACEHOLDER_BACKDROP =
     "https://placehold.co/1200x600/png?text=No+Backdrop";
   const PLACEHOLDER_POSTER = "https://placehold.co/600x900/png?text=No+Poster";

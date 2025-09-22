@@ -50,10 +50,8 @@ export default function Hero({ heroMovie }: HeroProps) {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/70 sm:bg-black/80" />
 
-      {/* Content */}
       <div className="relative z-10 text-center text-white max-w-[48rem] mx-auto px-4 sm:px-6 lg:px-0">
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-wide mb-6 sm:mb-10">
           Discover Amazing Movies

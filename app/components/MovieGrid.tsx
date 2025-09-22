@@ -28,7 +28,6 @@ export default function MovieGrid({
   const [localQuery, setLocalQuery] = useState<string>(query);
   const [localGenre, setLocalGenre] = useState<string>(genreId);
 
-  // Update URL automatically whenever filter changes
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     if (localQuery) params.set("query", localQuery);

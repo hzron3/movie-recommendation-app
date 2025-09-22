@@ -19,7 +19,7 @@ export async function getGenres(): Promise<import("@/types").Genre[]> {
   const res = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
   const data = await res.json();
 
-  console.log("Genres API response:", { resultsCount: data.genres?.length });
+  // console.log("Genres API response:", { resultsCount: data.genres?.length });
 
   if (!data.genres) throw new Error("Failed to fetch genres");
 
@@ -51,13 +51,6 @@ export async function fetchMovies(
   });
   const data = await res.json();
 
-  console.log("fetchMovies API response:", {
-    category,
-    genreId,
-    query,
-    resultsCount: data.results?.length,
-  });
-
   if (!data.results) throw new Error(`Failed to fetch movies for ${category}`);
 
   return data.results.map((movie: any) => ({
@@ -81,11 +74,6 @@ export async function fetchMovieDetails(
   );
   const data = await res.json();
 
-  console.log("MovieDetails API response:", {
-    success: data.success,
-    status_code: data.status_code,
-  });
-
   // Handle null paths
   data.poster_path = data.poster_path
     ? `${IMAGE_BASE}${data.poster_path}`
@@ -95,12 +83,4 @@ export async function fetchMovieDetails(
     : null;
 
   return data;
-}
-
-// Fetch hero movie (first popular movie)
-export async function fetchHeroMovie(): Promise<
-  import("@/types").Movie | null
-> {
-  const movies = await fetchMovies("popular", 1);
-  return movies[0] || null;
 }

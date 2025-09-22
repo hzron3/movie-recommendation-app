@@ -10,7 +10,6 @@ export default function ContactSection() {
     <section className="py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left Image & Info */}
           <div className="relative group h-full">
             <Image
               src="/hero-section-image.jpg"
@@ -50,7 +49,6 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right Form */}
           <div className="bg-gray-50 p-6 sm:p-8 lg:p-10 rounded-lg shadow-lg">
             <h2 className="text-sky-400  text-2xl sm:text-3xl lg:text-4xl font-semibold leading-snug mb-6 sm:mb-10">
               Send Us A Message

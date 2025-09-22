@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-100">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-col lg:flex-row items-center lg:items-start justify-between gap-6 lg:gap-0">
-        {/* Left: Social Icons */}
+        {/*Social Icons */}
         <ul className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6">
           <li>
             <Link href="#" className="block">
@@ -50,12 +50,12 @@ export default function Footer() {
           </li>
         </ul>
 
-        {/* Center: Copyright */}
+        {/*Copyright */}
         <p className="text-sm sm:text-base text-center text-gray-900 lg:text-center lg:flex-1">
           © 2025 Movie Recommendation App. All rights reserved.
         </p>
 
-        {/* Right: Footer Links */}
+        {/*Footer Links */}
         <ul className="flex flex-wrap justify-center lg:justify-end gap-4 sm:gap-8">
           <li>
             <Link

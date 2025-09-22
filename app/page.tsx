@@ -9,7 +9,6 @@ export default async function Home() {
   let heroMovie: Movie | null = null;
   try {
     popularMovies = await fetchMovies("popular", 1);
-    // heroMovie = await fetchHeroMovie();
   } catch (err) {
     console.error("Failed to fetch popular movies:", err);
   }

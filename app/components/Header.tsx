@@ -14,7 +14,6 @@ export default function Header() {
   return (
     <header className="flex shadow-[0px_0px_16px_rgba(17,17,26,0.1)] py-4 px-4 sm:px-6 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex items-center justify-between w-full max-w-screen-xl mx-auto relative">
-        {/* Logo */}
         <Link href="/" className="flex items-center z-10">
           <Image
             src="/Movie Film Logo.png"
@@ -32,7 +31,6 @@ export default function Header() {
           />
         </Link>
 
-        {/* Desktop Menu (Centered) */}
         <ul className="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-x-6 text-[#25a1d6] font-medium">
           <li>
             <Link href="/" className="hover:text-[#25a1d6]/80">
@@ -51,7 +49,6 @@ export default function Header() {
           </li>
         </ul>
 
-        {/* Login / Logout */}
         <div className="hidden lg:flex items-center gap-4 z-10">
           {!session ? (
             <Link
