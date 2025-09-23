@@ -35,7 +35,7 @@ export default function Login() {
     const result = await signIn("credentials", {
       email,
       password,
-      redirect: false, // manual redirec
+      redirect: false,
     });
 
     if (result?.error) {
@@ -44,15 +44,25 @@ export default function Login() {
       return;
     }
 
-    const session = await getSession();
-    if (session) {
-      router.push("/movies");
-    } else {
-      router.push("/movies");
-    }
+    // Wait for session to be available before redirect
+    let retries = 0;
+    const maxRetries = 20;
+    const interval = setInterval(async () => {
+      const session = await getSession();
+      retries++;
 
-    setLoading(false);
+      if (session) {
+        clearInterval(interval);
+        router.push(callbackUrl);
+        setLoading(false);
+      } else if (retries >= maxRetries) {
+        clearInterval(interval);
+        setError("Session not ready. Please try again.");
+        setLoading(false);
+      }
+    }, 250);
   };
+
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center py-6 px-4">
       <div className="max-w-[480px] w-full">
