@@ -1,19 +1,20 @@
 // middleware.ts
-import { auth } from "Auth";
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default auth((req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req });
+  const isLoggedIn = !!token;
 
-  const isProtectedRoute = nextUrl.pathname.startsWith("/movies");
+  const isProtected = req.nextUrl.pathname.startsWith("/movies");
 
-  if (isProtectedRoute && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", nextUrl));
+  if (isProtected && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
   matcher: ["/movies/:path*"],
