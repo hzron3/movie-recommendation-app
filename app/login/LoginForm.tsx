@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   UserIcon,
@@ -25,7 +26,7 @@ export default function Login() {
   useEffect(() => {
     // demo creds prefill
     setEmail("savannahinformatics@example.com");
-    setPassword("password");
+    // setPassword("password");
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,8 +79,12 @@ export default function Login() {
             Sign in
           </h1>
 
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-
+          {error && (
+            <div className="flex items-center justify-center gap-2 bg-red-100 text-red-700 sm:text-md  px-4 py-2 rounded-lg mt-4">
+              <ExclamationCircleIcon className="w-5 h-5" />
+              <span>{error}</span>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="mt-12 space-y-6">
             {/* Username */}
             <div>
@@ -125,7 +130,11 @@ export default function Login() {
                     <EyeIcon className="w-5 h-5 text-gray-400" />
                   )}
                 </div>
-              </div>
+              </div>{" "}
+              <p className="text-xs text-gray-500 mt-2">
+                Use <span className="font-semibold">demo123</span> as the
+                password for demo login.
+              </p>
             </div>
 
             {/* Submit */}
