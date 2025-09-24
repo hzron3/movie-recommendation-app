@@ -16,7 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (
           credentials.email === "savannahinformatics@example.com" &&
-          credentials.password === "password"
+          credentials.password === "demo123"
         ) {
           return {
             id: "1",
