@@ -133,7 +133,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white ${
+                className={`w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white hover:cursor-pointer ${
                   loading
                     ? "bg-sky-300 cursor-not-allowed"
                     : "bg-sky-400 hover:bg-sky-500"
